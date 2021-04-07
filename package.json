@@ -1,0 +1,24 @@
+{
+  "name": "busihub-service",
+  "version": "1.0.0",
+  "description": "Serverless BusiHub Service",
+  "main": "handler.js",
+  "dependencies": {
+    "short-uuid": "^4.1.0",
+    "twitter": "^1.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wjchan926/busihub-service.git"
+  },
+  "author": "Wesley Chan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wjchan926/busihub-service/issues"
+  },
+  "homepage": "https://github.com/wjchan926/busihub-service#readme"
+}
