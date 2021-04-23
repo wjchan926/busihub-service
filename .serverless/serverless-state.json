@@ -97,6 +97,12 @@
               "LogGroupName": "/aws/lambda/busihub-service-dev-tweetMessage"
             }
           },
+          "WpMessageLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/busihub-service-dev-wpMessage"
+            }
+          },
           "IamRoleLambdaExecution": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -181,7 +187,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/busihub-service/dev/1617917893408-2021-04-08T21:38:13.408Z/busihub-service.zip"
+                "S3Key": "serverless/busihub-service/dev/1619212930262-2021-04-23T21:22:10.262Z/busihub-service.zip"
               },
               "Handler": "handler.hello",
               "Runtime": "nodejs12.x",
@@ -206,7 +212,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/busihub-service/dev/1617917893408-2021-04-08T21:38:13.408Z/busihub-service.zip"
+                "S3Key": "serverless/busihub-service/dev/1619212930262-2021-04-23T21:22:10.262Z/busihub-service.zip"
               },
               "Handler": "handler.tweetMessage",
               "Runtime": "nodejs12.x",
@@ -224,24 +230,59 @@
               "TweetMessageLogGroup"
             ]
           },
-          "HelloLambdaVersion63SlcdBIkVNvYWJJXK7bfcFQElfRtm9L0QXa9ola1CE": {
+          "WpMessageLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/busihub-service/dev/1619212930262-2021-04-23T21:22:10.262Z/busihub-service.zip"
+              },
+              "Handler": "handler.postToWordPress",
+              "Runtime": "nodejs12.x",
+              "FunctionName": "busihub-service-dev-wpMessage",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "WpMessageLogGroup"
+            ]
+          },
+          "HelloLambdaVersionnd4XDl9C4dRvpaN8cXKrs4nn41fCxQXKwRDrYnc8Zck": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "t7Z5Ttjq8iHQQ4TKxCST249rLibsBTOwteFlEg12q70="
+              "CodeSha256": "AUN0nOeqX3nZDWyPJBUrVnJAq3IlIHmFxuKLt0ADfsQ="
             }
           },
-          "TweetMessageLambdaVersionTjJDXbwOfZJAiKMyKOxAAq0NO3Y4y7wN1gtg16JQ": {
+          "TweetMessageLambdaVersioniofRMQSiLnl7MkZJqqBdqCN2bZLlaPR8aLa3Xzod0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "TweetMessageLambdaFunction"
               },
-              "CodeSha256": "t7Z5Ttjq8iHQQ4TKxCST249rLibsBTOwteFlEg12q70="
+              "CodeSha256": "AUN0nOeqX3nZDWyPJBUrVnJAq3IlIHmFxuKLt0ADfsQ="
+            }
+          },
+          "WpMessageLambdaVersion8lurIkyfRn2aGQIWmEXutkNerMvzG3crcYBUnBXvl8": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "WpMessageLambdaFunction"
+              },
+              "CodeSha256": "AUN0nOeqX3nZDWyPJBUrVnJAq3IlIHmFxuKLt0ADfsQ="
             }
           }
         },
@@ -254,13 +295,19 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersion63SlcdBIkVNvYWJJXK7bfcFQElfRtm9L0QXa9ola1CE"
+              "Ref": "HelloLambdaVersionnd4XDl9C4dRvpaN8cXKrs4nn41fCxQXKwRDrYnc8Zck"
             }
           },
           "TweetMessageLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "TweetMessageLambdaVersionTjJDXbwOfZJAiKMyKOxAAq0NO3Y4y7wN1gtg16JQ"
+              "Ref": "TweetMessageLambdaVersioniofRMQSiLnl7MkZJqqBdqCN2bZLlaPR8aLa3Xzod0"
+            }
+          },
+          "WpMessageLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "WpMessageLambdaVersion8lurIkyfRn2aGQIWmEXutkNerMvzG3crcYBUnBXvl8"
             }
           }
         }
@@ -360,7 +407,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersion63SlcdBIkVNvYWJJXK7bfcFQElfRtm9L0QXa9ola1CE"
+        "versionLogicalId": "HelloLambdaVersionnd4XDl9C4dRvpaN8cXKrs4nn41fCxQXKwRDrYnc8Zck"
       },
       "tweetMessage": {
         "handler": "handler.tweetMessage",
@@ -371,7 +418,18 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "TweetMessageLambdaVersionTjJDXbwOfZJAiKMyKOxAAq0NO3Y4y7wN1gtg16JQ"
+        "versionLogicalId": "TweetMessageLambdaVersioniofRMQSiLnl7MkZJqqBdqCN2bZLlaPR8aLa3Xzod0"
+      },
+      "wpMessage": {
+        "handler": "handler.postToWordPress",
+        "events": [],
+        "name": "busihub-service-dev-wpMessage",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs12.x",
+        "vpc": {},
+        "versionLogicalId": "WpMessageLambdaVersion8lurIkyfRn2aGQIWmEXutkNerMvzG3crcYBUnBXvl8"
       }
     },
     "configValidationMode": "warn",
@@ -393,7 +451,7 @@
     "artifact": "/home/wesley/dev/busihub-service/.serverless/busihub-service.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/busihub-service/dev/1617917893408-2021-04-08T21:38:13.408Z",
+    "artifactDirectoryName": "serverless/busihub-service/dev/1619212930262-2021-04-23T21:22:10.262Z",
     "artifact": "busihub-service.zip"
   }
 }

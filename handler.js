@@ -1,6 +1,7 @@
 "use-strict";
 
 var TwitterController = require("./twitterController");
+var WordPressController = require("./wordpressController");
 
 module.exports.hello = async (event) => {
   return {
@@ -37,4 +38,19 @@ module.exports.tweetMessage = async (event, context, callback) => {
 
   callback(null, response);
   return response;
+};
+
+module.exports.postToWordPress = async (event) => {
+  const ctrl = new WordPressController();
+  const requestBody = JSON.parse(event.body);
+  const { content, title } = requestBody;
+
+  const params = {
+    content,
+    title,
+  };
+
+  const msgResp = ctrl.postMessage(params);
+
+  return msgResp;
 };
