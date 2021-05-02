@@ -1,24 +1,9 @@
 "use-strict";
 
+const aws = require("aws-sdk");
+
 var TwitterController = require("./twitterController");
 var WordPressController = require("./wordpressController");
-
-module.exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: "Go Serverless v1.0! Your function executed successfully!",
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
-};
 
 module.exports.tweetMessage = async (event, context, callback) => {
   const ctrl = new TwitterController();
@@ -53,4 +38,37 @@ module.exports.postToWordPress = async (event) => {
   const msgResp = ctrl.postMessage(params);
 
   return msgResp;
+};
+
+module.exports.sendEmail = async (event) => {
+  const requestBody = JSON.parse(event.body);
+  const { text, subject, to, from } = requestBody;
+
+  const ses = new aws.SES({ region: "us-east-1" });
+
+  var params = {
+    Destination: {
+      ToAddresses: [to],
+    },
+    Message: {
+      Body: {
+        Text: { Data: text },
+      },
+      Subject: { Data: subject },
+    },
+    Source: from,
+  };
+
+  await ses.sendEmail(params).promise();
+
+  return {
+    statusCode: 400,
+    body: JSON.stringify(
+      {
+        message: "Email sent!",
+      },
+      null,
+      2
+    ),
+  };
 };

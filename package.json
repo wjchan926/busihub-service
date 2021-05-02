@@ -4,6 +4,7 @@
   "description": "Serverless BusiHub Service",
   "main": "handler.js",
   "dependencies": {
+    "aws-sdk": "^2.897.0",
     "node-fetch": "^2.6.1",
     "short-uuid": "^4.1.0",
     "twitter": "^1.7.1"

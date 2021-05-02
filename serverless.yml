@@ -18,7 +18,7 @@ service: busihub-service
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
-frameworkVersion: '2'
+frameworkVersion: "2"
 
 provider:
   name: aws
@@ -58,12 +58,12 @@ provider:
 #    - include-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
   tweetMessage:
     handler: handler.tweetMessage
   wpMessage:
     handler: handler.postToWordPress
+  emailMessage:
+    handler: handler.sendEmail
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
